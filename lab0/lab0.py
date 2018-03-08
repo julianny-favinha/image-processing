@@ -31,7 +31,5 @@ img_negative = 255 - img
 misc.imsave(img_file.replace('.png', '') + '_negative.png', img_negative)
 
 # new intensity interval image
-#img_new_intensity = (60/255)*img + 120
-img_new_intensity = img
-img_new_intensity[img_new_intensity < 150] = 200
+img_new_intensity = (60/255)*img + 120
 misc.imsave(img_file.replace('.png', '') + '_new_intensity.png', img_new_intensity)
