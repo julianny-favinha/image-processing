@@ -2,6 +2,7 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import misc
+from skimage import exposure
 
 # img file
 img_file = sys.argv[1]
@@ -21,15 +22,17 @@ plt.ylabel("Frequency")
 plt.savefig(img_file.replace('.png', '') + '_histogram.png')
 
 # show image statistics
-print("(Width, Height): ", img.shape)
-print("Minimum intensity: ", img.min())
-print("Maximum intensity: ", img.max())
-print("Medium intensity: ", img.mean())
+print("IMAGE " + img_file + " STATISTICS")
+print("(Width, Height): (%d, %d)" % (img.shape[1], img.shape[0]))
+print("Minimum intensity: %d" % img.min())
+print("Maximum intensity: %d" % img.max())
+print("Medium intensity: %.2f" % img.mean())
+print()
 
 # negative image
 img_negative = 255 - img
 misc.imsave(img_file.replace('.png', '') + '_negative.png', img_negative)
 
 # new intensity interval image
-img_new_intensity = (60/255)*img + 120
+img_new_intensity = exposure.rescale_intensity(img, out_range=(120, 180))
 misc.imsave(img_file.replace('.png', '') + '_new_intensity.png', img_new_intensity)
