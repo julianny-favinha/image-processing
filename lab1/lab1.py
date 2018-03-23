@@ -3,8 +3,7 @@ import numpy as np
 from skimage import io, color, measure
 import matplotlib.pyplot as plt
 
-#file_name = sys.argv[1]
-file_name = "objetos1.png"
+file_name = sys.argv[1]
 
 # open image
 img_colored = io.imread(file_name)
