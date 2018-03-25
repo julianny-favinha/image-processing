@@ -19,7 +19,7 @@ fig, ax = plt.subplots()
 ax.imshow(img_gray, interpolation="nearest", cmap=plt.cm.gray)
 for n, contour in enumerate(contours):
 	ax.plot(contour[:, 1], contour[:, 0], linewidth=1.3)
-plt.show()
+plt.savefig(file_name.replace(".png", "") + "_contours.png")
 
 small_regions = []
 medium_regions = []
@@ -48,8 +48,9 @@ print(medium_regions)
 print("Large regions: %d" % (len(large_regions)))
 print(large_regions)
 
+plt.clf()
 plt.hist(areas, bins="auto")
 plt.title("Histogram of areas in %s" % (file_name))
 plt.xlabel("Area")
 plt.ylabel("Number os regions")
-plt.savefig("histogram_" + file_name)
+plt.savefig(file_name.replace(".png", "") + "_histogram.png")
