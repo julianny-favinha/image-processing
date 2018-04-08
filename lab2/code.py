@@ -14,10 +14,6 @@ OUTPUT
 - plane_bits: tres planos de bits menos significativos representados pelos valores 0, 1 ou 2.
 """
 
-RED = 0
-GREEN = 1
-BLUE = 2
-
 def toBinary(d):
     return ''.join(str(1 & int(d) >> i) for i in range(8)[::-1])
 
@@ -39,6 +35,13 @@ def readText(file_name):
 	f = open(file_name, "r")
 	return f.read().strip()
 
+def cor(color):
+	if color == 0:
+		return "red"
+	elif color == 1:
+		return "green"
+	return "blue"
+
 # params
 file_name = sys.argv[1]
 bit_plane = int(sys.argv[2])
@@ -46,43 +49,39 @@ file_text_name = sys.argv[3]
 
 # reads file image and stores the 3 channels RED, GREEN and BLUE
 img_colored = io.imread(file_name)
-save_plane(img_colored, "plane_img_red", RED)
-save_plane(img_colored, "plane_img_green", GREEN)
-save_plane(img_colored, "plane_img_blue", BLUE)
+save_plane(img_colored, "plane_img_red", 0)
+save_plane(img_colored, "plane_img_green", 1)
+save_plane(img_colored, "plane_img_blue", 2)
 
-with open(file_text_name) as file_text:
-	row = 0
-	col = 0
-	while True:
-		letter = file_text.read(1)
-		if not letter or letter == "\n":
-			break
-		# transform c decimal ascii to binary
-		letter_binary = toBinary(ord(letter))
+# \0 é a condição de parada para podermos decodificar posteriormente
+message = readText(file_text_name) + "\0"
+row = 0
+col = 0
+color = 0
 
-		i = 0
-		while i < len(letter_binary):
-			""" pegar o valor  img_colored[x][y] -> array [R, G, B]
-				transformar R para binario, trocar o bit 0 1 ou 2 menos significativo por c
-				voltar R para decimal e colocar na imagem de saida"""
-			# chegou ao final da linha
-			if col == img_colored.shape[1]:
-				row += 1
-				col = 0
+binary_message = ""
+for letter in message:
+	binary_message += toBinary(ord(letter))
 
-			pixelRgb = img_colored[row][col]
-			img_colored[row][col][RED] = toDecimal(substituteCharAt(toBinary(pixelRgb[RED]), letter_binary[i], 7 - bit_plane))
-			i += 1
-			if i < len(letter_binary):
-				img_colored[row][col][GREEN] = toDecimal(substituteCharAt(toBinary(pixelRgb[GREEN]), letter_binary[i], 7 - bit_plane))
-				i += 1
-				if i < len(letter_binary):
-					img_colored[row][col][BLUE] = toDecimal(substituteCharAt(toBinary(pixelRgb[BLUE]), letter_binary[i], 7 - bit_plane))
-					i += 1
-					col += 1
+for bit in binary_message:
+	""" pegar o valor  img_colored[x][y] -> array [R, G, B]
+		transformar R para binario, trocar o bit 0 1 ou 2 menos significativo por c
+		voltar R para decimal e colocar na imagem de saida"""
+	# chegou ao final da linha
+	if col == img_colored.shape[1]:
+		row += 1
+		col = 0
 
-save_plane(img_colored, "plane_new_red", RED)
-save_plane(img_colored, "plane_new_green", GREEN)
-save_plane(img_colored, "plane_new_blue", BLUE)
+	pixelRgb = img_colored[row][col]
+	print(cor(color))
+	print(bit)
+	print(toDecimal(substituteCharAt(toBinary(pixelRgb[color]), bit, 7 - bit_plane)))
+	img_colored[row][col][color] = toDecimal(substituteCharAt(toBinary(pixelRgb[color]), bit, 7 - bit_plane))
+	if color + 1 == 3:
+		col += 1	
+	color = (color + 1) % 3
 
+save_plane(img_colored, "plane_new_red", 0)
+save_plane(img_colored, "plane_new_green", 1)
+save_plane(img_colored, "plane_new_blue", 2)
 
