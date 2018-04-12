@@ -35,6 +35,9 @@ bit_plane = int(sys.argv[2])
 # reads image
 img_colored = io.imread(file_name)
 
+# open file do write message hidden
+f = open("text_output.txt", "w")
+
 bits = ""
 color = 0
 stop = False
@@ -52,9 +55,11 @@ for row in range(0, img_colored.shape[0]):
 					stop = True
 					break
 
-				writeInFile(chr(toDecimal(bits)))				
+				f.write(chr(toDecimal(bits)))			
 				bits = ""
 		if stop:
 			break
 	if stop:
 		break
+
+f.close()
