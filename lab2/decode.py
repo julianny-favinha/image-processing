@@ -40,8 +40,10 @@ color = 0
 stop = False
 for row in range(0, img_colored.shape[0]):
 	for col in range(0, img_colored.shape[1]):
-		print("(%d, %d)" %(row, col))
 		for color in range(0, 3):
+			"""para cada canal do pixel de posicao [row][col], concatena o bit_plane menos significativo em bits
+				se o tamanho de bits chegou em 8, entao podemos ler um char
+				salva o char no arquivo texto de saida"""
 			pixel_rgb = img_colored[row][col]
 			bits = bits + getBit(toBinary(pixel_rgb[color]), bit_plane)
 	
@@ -49,7 +51,10 @@ for row in range(0, img_colored.shape[0]):
 				if toDecimal(bits) == 0:
 					stop = True
 					break
+
 				writeInFile(chr(toDecimal(bits)))				
 				bits = ""
 		if stop:
 			break
+	if stop:
+		break

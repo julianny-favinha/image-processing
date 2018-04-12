@@ -11,7 +11,7 @@ INPUT
 
 OUTPUT
 - img_output.png: imagem com mensagem embutida.
-*********************************************************************************************************************
+PLANOS DE BITS*********************************************************************************************************************
 """
 
 BITS = 8
@@ -25,14 +25,6 @@ def toDecimal(b):
 def substituteCharAt(string, char, position):
 	return string[:position] + char + string[(position+1):]
 
-def save_plane(img_colored, file_name, bit_plane):
-	f = open(file_name, "w+")
-	for row in range(0, img_colored.shape[0]):
-		for col in range(0, img_colored.shape[1]):
-			f.write("%d " %(img_colored[row][col][bit_plane]))
-		f.write("\n")
-	f.close()
-
 def readText(file_name):
 	f = open(file_name, "r")
 	return f.read()[:-1]
@@ -42,11 +34,8 @@ file_name = sys.argv[1]
 bit_plane = int(sys.argv[2])
 file_text_name = sys.argv[3]
 
-# reads file image and stores the 3 channels RED, GREEN and BLUE
+# reads file image
 img_colored = io.imread(file_name)
-save_plane(img_colored, "plane_img_red", 0)
-save_plane(img_colored, "plane_img_green", 1)
-save_plane(img_colored, "plane_img_blue", 2)
 
 # \0 é a condição de parada para podermos decodificar posteriormente
 message = readText(file_text_name) + "\0"
@@ -77,8 +66,4 @@ for bit in binary_message:
 
 	color = (color + 1) % 3
 
-save_plane(img_colored, "plane_new_red", 0)
-save_plane(img_colored, "plane_new_green", 1)
-save_plane(img_colored, "plane_new_blue", 2)
 io.imsave(file_name.replace(".png", "") + "_output.png", img_colored)
-
