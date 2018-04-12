@@ -66,4 +66,4 @@ for bit in binary_message:
 
 	color = (color + 1) % 3
 
-io.imsave(file_name.replace(".png", "") + "_output.png", img_colored)
+io.imsave(file_name.replace(".png", "") + "_img_output.png", img_colored)

@@ -20,11 +20,6 @@ def toDecimal(b):
 def toBinary(d):
     return ''.join(str(1 & int(d) >> i) for i in range(BITS)[::-1])
 
-def writeInFile(char):
-	f = open("text_output.txt", "a")
-	f.write(char)
-	f.close()
-
 def getBit(string, bit):
 	return string[BITS - 1 - bit]
 
@@ -36,7 +31,7 @@ bit_plane = int(sys.argv[2])
 img_colored = io.imread(file_name)
 
 # open file do write message hidden
-f = open("text_output.txt", "w")
+f = open(file_name.replace("img_output.png", "") + "text_output.txt", "w")
 
 bits = ""
 color = 0
