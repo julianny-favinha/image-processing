@@ -1,4 +1,5 @@
 import sys
+import time
 from skimage import io
 
 """
@@ -22,6 +23,8 @@ def toBinary(d):
 
 def getBit(string, bit):
 	return string[BITS - 1 - bit]
+
+start_time = time.time()
 
 # parameters
 file_name = sys.argv[1]
@@ -58,3 +61,6 @@ for row in range(0, img_colored.shape[0]):
 		break
 
 f.close()
+
+elapsed_time = time.time() - start_time
+print("Elapsed time: %1f s" %(elapsed_time))

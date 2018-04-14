@@ -1,4 +1,5 @@
 import sys
+import time
 from skimage import io
 
 """
@@ -28,6 +29,9 @@ def substituteCharAt(string, char, position):
 def readText(file_name):
 	f = open(file_name, "r")
 	return f.read()[:-1]
+
+
+start_time = time.time()
 
 # parameters
 file_name = sys.argv[1]
@@ -67,3 +71,6 @@ for bit in binary_message:
 	color = (color + 1) % 3
 
 io.imsave(file_name.replace(".png", "") + "_img_output.png", img_colored)
+
+elapsed_time = time.time() - start_time
+print("Elapsed time: %1f s" %(elapsed_time))
