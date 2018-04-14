@@ -1,6 +1,7 @@
 import sys
 import time
 from skimage import io
+import numpy as np
 
 """
 python3 decode.py output.png plane_bits
@@ -60,6 +61,7 @@ for row in range(0, img_colored.shape[0]):
 	if stop:
 		break
 
+f.write("\n")
 f.close()
 
 elapsed_time = time.time() - start_time
