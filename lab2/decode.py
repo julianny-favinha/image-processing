@@ -12,6 +12,7 @@ INPUT
 
 OUTPUT
 - text_output.txt: mensagem que estava embutida na imagem.
+- img_output_bit_planex.png: imagem do plano de bits x
 """
 
 BITS = 8
@@ -37,10 +38,9 @@ img_bit_plane = np.array(img_colored, copy=True)
 
 # open file do write message hidden
 f = open(file_name.replace("img_output.png", "") + "text_output.txt", "w")
-
 bits = ""
 color = 0
-stop = False
+write_file = True
 for row in range(0, img_colored.shape[0]):
 	for col in range(0, img_colored.shape[1]):
 		for color in range(0, 3):
@@ -50,26 +50,17 @@ for row in range(0, img_colored.shape[0]):
 			pixel_rgb = img_colored[row][col]
 			bit = getBit(toBinary(pixel_rgb[color]), bit_plane)
 			img_bit_plane[row][col][color] = bit
-			bits = bits + bit
+			bits = bits + bit	
 	
 			if len(bits) == 8:
-				if toDecimal(bits) == 0:
-					stop = True
-					break
-
-				f.write(chr(toDecimal(bits)))			
-				bits = ""
-		if stop:
-			break
-	if stop:
-		break
-
+				if write_file and toDecimal(bits) != 0:
+					f.write(chr(toDecimal(bits)))			
+					bits = ""
+				else:
+					write_file = False
 f.write("\n")
 f.close()
 
-for i in range(0, 20):
-	for j in range(0, 20):
-		print(img_bit_plane[i][j])
 io.imsave(file_name.replace(".png", "") + "_bit_plane" + str(bit_plane) + ".png", img_bit_plane)
 
 elapsed_time = time.time() - start_time
