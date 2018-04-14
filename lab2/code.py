@@ -12,7 +12,6 @@ INPUT
 
 OUTPUT
 - img_output.png: imagem com mensagem embutida.
-PLANOS DE BITS*********************************************************************************************************************
 """
 
 BITS = 8
