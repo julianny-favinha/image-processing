@@ -33,6 +33,7 @@ bit_plane = int(sys.argv[2])
 
 # reads image
 img_colored = io.imread(file_name)
+img_bit_plane = np.array(img_colored, copy=True) 
 
 # open file do write message hidden
 f = open(file_name.replace("img_output.png", "") + "text_output.txt", "w")
@@ -47,7 +48,9 @@ for row in range(0, img_colored.shape[0]):
 				se o tamanho de bits chegou em 8, entao podemos ler um char
 				salva o char no arquivo texto de saida"""
 			pixel_rgb = img_colored[row][col]
-			bits = bits + getBit(toBinary(pixel_rgb[color]), bit_plane)
+			bit = getBit(toBinary(pixel_rgb[color]), bit_plane)
+			img_bit_plane[row][col][color] = bit
+			bits = bits + bit
 	
 			if len(bits) == 8:
 				if toDecimal(bits) == 0:
@@ -63,6 +66,11 @@ for row in range(0, img_colored.shape[0]):
 
 f.write("\n")
 f.close()
+
+for i in range(0, 20):
+	for j in range(0, 20):
+		print(img_bit_plane[i][j])
+io.imsave(file_name.replace(".png", "") + "_bit_plane" + str(bit_plane) + ".png", img_bit_plane)
 
 elapsed_time = time.time() - start_time
 print("Elapsed time: %1f s" %(elapsed_time))
