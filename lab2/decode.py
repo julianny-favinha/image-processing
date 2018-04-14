@@ -34,7 +34,8 @@ bit_plane = int(sys.argv[2])
 
 # reads image
 img_colored = io.imread(file_name)
-img_bit_plane = np.array(img_colored, copy=True) 
+img_bit_plane = np.array(img_colored, copy=True)
+img_bit_plane7 = np.array(img_colored, copy=True)
 
 # open file do write message hidden
 f = open(file_name.replace("img_output.png", "") + "text_output.txt", "w")
@@ -50,7 +51,10 @@ for row in range(0, img_colored.shape[0]):
 			pixel_rgb = img_colored[row][col]
 			bit = getBit(toBinary(pixel_rgb[color]), bit_plane)
 			img_bit_plane[row][col][color] = bit
-			bits = bits + bit	
+			bits = bits + bit
+
+			bit7 = getBit(toBinary(pixel_rgb[color]), BITS - 1)
+			img_bit_plane7[row][col][color] = bit7
 	
 			if len(bits) == 8:
 				if write_file and toDecimal(bits) != 0:
@@ -62,6 +66,7 @@ f.write("\n")
 f.close()
 
 io.imsave(file_name.replace(".png", "") + "_bit_plane" + str(bit_plane) + ".png", img_bit_plane)
+io.imsave(file_name.replace(".png", "") + "_bit_plane7.png", img_bit_plane7)
 
 elapsed_time = time.time() - start_time
 print("Elapsed time: %1f s" %(elapsed_time))
