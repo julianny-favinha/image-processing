@@ -50,11 +50,11 @@ for row in range(0, img_colored.shape[0]):
 				salva o char no arquivo texto de saida"""
 			pixel_rgb = img_colored[row][col]
 			bit = getBit(toBinary(pixel_rgb[color]), bit_plane)
-			img_bit_plane[row][col][color] = bit
+			img_bit_plane[row][col][color] = int(bit) * pow(2, bit_plane) 
 			bits = bits + bit
 
 			bit7 = getBit(toBinary(pixel_rgb[color]), BITS - 1)
-			img_bit_plane7[row][col][color] = bit7
+			img_bit_plane7[row][col][color] = int(bit7) * pow(2, BITS-1)
 	
 			if len(bits) == 8:
 				if write_file and toDecimal(bits) != 0:
@@ -62,6 +62,7 @@ for row in range(0, img_colored.shape[0]):
 					bits = ""
 				else:
 					write_file = False
+
 f.write("\n")
 f.close()
 
