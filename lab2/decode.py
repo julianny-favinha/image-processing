@@ -37,7 +37,7 @@ img_colored = io.imread(file_name)
 img_bit_plane = np.array(img_colored, copy=True)
 img_bit_plane7 = np.array(img_colored, copy=True)
 
-# open file do write message hidden
+# open file to write message
 f = open(file_name.replace("img_output.png", "") + "text_output.txt", "w")
 bits = ""
 color = 0
