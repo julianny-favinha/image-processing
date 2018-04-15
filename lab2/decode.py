@@ -42,6 +42,7 @@ f = open(file_name.replace("img_output.png", "") + "text_output.txt", "w")
 bits = ""
 color = 0
 write_file = True
+
 for row in range(0, img_colored.shape[0]):
 	for col in range(0, img_colored.shape[1]):
 		for color in range(0, 3):
@@ -56,7 +57,7 @@ for row in range(0, img_colored.shape[0]):
 			bit7 = getBit(toBinary(pixel_rgb[color]), BITS - 1)
 			img_bit_plane7[row][col][color] = int(bit7) * pow(2, BITS-1)
 	
-			if len(bits) == 8:
+			if len(bits) == BITS:
 				if write_file and toDecimal(bits) != 0:
 					f.write(chr(toDecimal(bits)))			
 					bits = ""
