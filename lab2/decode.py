@@ -30,15 +30,16 @@ img_colored = io.imread(file_name)
 img_bit_plane = np.array(img_colored, copy=True)
 img_bit_plane7 = np.array(img_colored, copy=True)
 
-# abre o arquivo para escrever a mensagem que será lida
+# abre o arquivo texto para escrever a mensagem que será lida
 f = open(file_name.replace(".png", "") + "_text.txt", "w")
 bits = ""
 color = 0
 write_file = True
 
-"""para cada canal do pixel de posicao [row][col], concatena o bit_plane menos significativo em bits
-	se o tamanho de bits chegou em 8, entao podemos ler um char
-	salva o char no arquivo texto de saida"""
+"""Para cada canal de cor do pixel img_colored[linha][coluna],
+	Concatena o bit da posicao bit_plane menos siginificativo na variavel bits
+	Se o tamanho de bits chegou em 8, entao podemos ler um caractere da mensagem
+	Salvar o caractere lido no arquivo texto de saida"""
 for row in range(0, img_colored.shape[0]):
 	for col in range(0, img_colored.shape[1]):
 		for color in range(0, 3):
@@ -57,6 +58,7 @@ for row in range(0, img_colored.shape[0]):
 				else:
 					write_file = False
 
+# fecha o arquivo texto
 f.write("\n")
 f.close()
 

@@ -44,9 +44,11 @@ binary_message = ""
 for letter in message:
 	binary_message += toBinary(ord(letter))
 
-""" valor R = img_colored[x][y] retorna um array [R, G, B]
-	transformar R para binario, trocar o bit 0, 1 ou 2 menos significativo por c
-	voltar valor novo para decimal e colocar na imagem de saida"""
+""" img_colored[linha][coluna] retorna um array [R, G, B].
+	Seja P o valor de img_colored[linha][coluna][R].
+	Transformar P para binario;
+	Trocar o bit bit_plane menos significativo por bit;
+	Voltar novo valor para decimal e inserir na imagem de saida"""
 for bit in binary_message:
 	# chegou ao final da linha
 	if col == img_colored.shape[1]:
