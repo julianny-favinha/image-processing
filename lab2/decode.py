@@ -38,7 +38,7 @@ img_bit_plane = np.array(img_colored, copy=True)
 img_bit_plane7 = np.array(img_colored, copy=True)
 
 # open file to write message
-f = open(file_name.replace("img_output.png", "") + "text_output.txt", "w")
+f = open(file_name.replace(".png", "") + "_text.txt", "w")
 bits = ""
 color = 0
 write_file = True
@@ -67,8 +67,8 @@ for row in range(0, img_colored.shape[0]):
 f.write("\n")
 f.close()
 
-img_bit_plane[img_bit_plane > 0] = pow(2, bit_plane)
-img_bit_plane7[img_bit_plane7 > 0] = pow(2, BITS-1)
+img_bit_plane[img_bit_plane > 0] = 255
+img_bit_plane7[img_bit_plane7 > 0] = 255
 
 io.imsave(file_name.replace(".png", "") + "_bit_plane" + str(bit_plane) + ".png", img_bit_plane)
 io.imsave(file_name.replace(".png", "") + "_bit_plane7.png", img_bit_plane7)

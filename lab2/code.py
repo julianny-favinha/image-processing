@@ -57,6 +57,10 @@ for bit in binary_message:
 		row += 1
 		col = 0
 
+	# reached end of image
+	if row == img_colored.shape[0]:
+		break
+
 	""" valor R = img_colored[x][y] retorna um array [R, G, B]
 		transformar R para binario, trocar o bit 0, 1 ou 2 menos significativo por c
 		voltar valor novo para decimal e colocar na imagem de saida"""
@@ -69,7 +73,7 @@ for bit in binary_message:
 
 	color = (color + 1) % 3
 
-io.imsave(file_name.replace(".png", "") + "_img_output.png", img_colored)
+io.imsave(file_name.replace(".png", "") + "_output.png", img_colored)
 
 elapsed_time = time.time() - start_time
 print("Elapsed time: %1f s" %(elapsed_time))
