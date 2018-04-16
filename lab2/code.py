@@ -2,18 +2,6 @@ import sys
 import time
 from skimage import io
 
-"""
-python3 code.py input.png bit_plane text.txt
-
-INPUT
-- img_input.png: imagem onde sera embutida a mensagem.
-- bit_plane: três planos de bits menos significativos, sendo 0, 1 ou 2
-- text_input.txt: mensagem a ser oculta.
-
-OUTPUT
-- img_output.png: imagem com mensagem embutida.
-"""
-
 BITS = 8
 
 def toBinary(d):

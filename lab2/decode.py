@@ -3,19 +3,8 @@ import time
 from skimage import io
 import numpy as np
 
-"""
-python3 decode.py output.png plane_bits
-
-INPUT
-- img_output.png: imagem com a mensagem embutida.
-- plane_bits: tres planos de bits menos significativos representados pelos valores 0, 1 ou 2.
-
-OUTPUT
-- text_output.txt: mensagem que estava embutida na imagem.
-- img_output_bit_planex.png: imagem do plano de bits x
-"""
-
 BITS = 8
+MAX_INTENSITY = 255
 
 def toDecimal(b):
 	return int(b, 2)
@@ -67,8 +56,8 @@ for row in range(0, img_colored.shape[0]):
 f.write("\n")
 f.close()
 
-img_bit_plane[img_bit_plane > 0] = 255
-img_bit_plane7[img_bit_plane7 > 0] = 255
+img_bit_plane[img_bit_plane > 0] = MAX_INTENSITY
+img_bit_plane7[img_bit_plane7 > 0] = MAX_INTENSITY
 
 io.imsave(file_name.replace(".png", "") + "_bit_plane" + str(bit_plane) + ".png", img_bit_plane)
 io.imsave(file_name.replace(".png", "") + "_bit_plane7.png", img_bit_plane7)
