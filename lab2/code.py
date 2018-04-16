@@ -77,3 +77,4 @@ io.imsave(file_name.replace(".png", "") + "_output.png", img_colored)
 
 elapsed_time = time.time() - start_time
 print("Elapsed time: %1f s" %(elapsed_time))
+

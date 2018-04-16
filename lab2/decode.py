@@ -75,3 +75,4 @@ io.imsave(file_name.replace(".png", "") + "_bit_plane7.png", img_bit_plane7)
 
 elapsed_time = time.time() - start_time
 print("Elapsed time: %1f s" %(elapsed_time))
+
