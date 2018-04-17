@@ -25,12 +25,13 @@ def readText(file_name):
 start_time = time.time()
 
 # parametros de entrada
-file_name = sys.argv[1]
+file_name, file_name_extension = sys.argv[1].split(".")
+file_name_extension = "." + file_name_extension
 bit_plane = int(sys.argv[2])
 file_text_name = sys.argv[3]
 
 # le a imagem de entrada
-img_colored = io.imread(file_name)
+img_colored = io.imread(file_name + file_name_extension)
 
 # le a mensagem a ser esteganografada na imagem e coloca o caractere \0 ao final, como critério de parada
 message = readText(file_text_name) + "\0"
@@ -69,7 +70,7 @@ for bit in binary_message:
 	color = (color + 1) % 3
 
 # salva imagem de saida
-io.imsave(file_name.replace(".png", "") + "_output.png", img_colored)
+io.imsave(file_name + "_output" + file_name_extension, img_colored)
 
 # calcula tempo decorrido
 elapsed_time = time.time() - start_time

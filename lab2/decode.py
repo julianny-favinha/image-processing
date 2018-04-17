@@ -22,16 +22,17 @@ def getBit(string, bit):
 start_time = time.time()
 
 # parametros de entrada
-file_name = sys.argv[1]
+file_name, file_name_extension = sys.argv[1].split(".")
+file_name_extension = "." + file_name_extension
 bit_plane = int(sys.argv[2])
 
 # le a imagem de entrada e cria as duas imagens dos planos de saida
-img_colored = io.imread(file_name)
+img_colored = io.imread(file_name + file_name_extension)
 img_bit_plane = np.array(img_colored, copy=True)
 img_bit_plane7 = np.array(img_colored, copy=True)
 
 # abre o arquivo texto para escrever a mensagem que será lida
-f = open(file_name.replace(".png", "") + "_text.txt", "w")
+f = open(file_name + "_text.txt", "w")
 bits = ""
 color = 0
 write_file = True
@@ -68,8 +69,8 @@ img_bit_plane[img_bit_plane > 0] = MAX_INTENSITY
 img_bit_plane7[img_bit_plane7 > 0] = MAX_INTENSITY
 
 # salva as imagens
-io.imsave(file_name.replace(".png", "") + "_bit_plane" + str(bit_plane) + ".png", img_bit_plane)
-io.imsave(file_name.replace(".png", "") + "_bit_plane7.png", img_bit_plane7)
+io.imsave(file_name + "_bit_plane" + str(bit_plane) + file_name_extension, img_bit_plane)
+io.imsave(file_name + "_bit_plane7" + file_name_extension, img_bit_plane7)
 
 # calcula tempo decorrido
 elapsed_time = time.time() - start_time
