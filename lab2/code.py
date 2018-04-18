@@ -2,7 +2,8 @@ import sys
 import time
 from skimage import io
 
-BITS = 8
+BITS = 85
+MAX_INTENSITY = 25
 
 # retorna o valor inteiro da string b, composta apenas por 0s e 1s
 def toBinary(d):
@@ -32,6 +33,8 @@ file_text_name = sys.argv[3]
 
 # le a imagem de entrada
 img_colored = io.imread(file_name + file_name_extension)
+img_bit_plane = np.array(img_colored, copy=True)
+img_bit_plane7 = np.array(img_colored, copy=True)
 
 # le a mensagem a ser esteganografada na imagem e coloca o caractere \0 ao final, como critério de parada
 message = readText(file_text_name) + "\0"
@@ -47,7 +50,7 @@ for letter in message:
 
 # verifica se o texto cabe na imagem
 if len(binary_message) > img_colored.size:
-	print("Message is bigger than image. Consider input a smaller text.")
+	print("Message is bigger than image. Consider input a smaller text or a bigger image.")
 	sys.exit()
 
 """ img_colored[linha][coluna] retorna um array [R, G, B].
@@ -76,16 +79,21 @@ for bit in binary_message:
 
 for row in range(0, img_colored.shape[0]):
 	for col in range(0, img_colored.shape[1]):
-		bit = getBit(toBinary(pixel_rgb[color]), bit_plane)
-		img_bit_plane[row][col][color] = int(bit)
+		for color in range(0, 3):
+			bit = getBit(toBinary(pixel_rgb[color]), bit_plane)
+			img_bit_plane[row][col][color] = int(bit)
 
-		bit7 = getBit(toBinary(pixel_rgb[color]), BITS - 1)
-		img_bit_plane7[row][col][color] = int(bit7)
+			bit7 = getBit(toBinary(pixel_rgb[color]), BITS - 1)
+			img_bit_plane7[row][col][color] = int(bit7)
 
 # transformação de intensidade
 # isso é feito para podermos visualizar melhor as imagens dos planos. caso contrário, elas ficariam escuras demais
 img_bit_plane[img_bit_plane > 0] = MAX_INTENSITY
 img_bit_plane7[img_bit_plane7 > 0] = MAX_INTENSITY
+
+# salva as imagens
+io.imsave(file_name + "_bit_plane" + str(bit_plane) + file_name_extension, img_bit_plane)
+io.imsave(file_name + "_bit_plane7" + file_name_extension, img_bit_plane7)
 
 # salva imagem de saida
 io.imsave(file_name + "_output" + file_name_extension, img_colored)

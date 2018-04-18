@@ -4,7 +4,7 @@ from skimage import io
 import numpy as np
 
 BITS = 8
-MAX_INTENSITY = 255
+#MAX_INTENSITY = 255
 
 # retorna o valor inteiro da string b, composta apenas por 0s e 1s
 def toDecimal(b):
@@ -28,8 +28,8 @@ bit_plane = int(sys.argv[2])
 
 # le a imagem de entrada e cria as duas imagens dos planos de saida
 img_colored = io.imread(file_name + file_name_extension)
-img_bit_plane = np.array(img_colored, copy=True)
-img_bit_plane7 = np.array(img_colored, copy=True)
+#img_bit_plane = np.array(img_colored, copy=True)
+#img_bit_plane7 = np.array(img_colored, copy=True)
 
 # abre o arquivo texto para escrever a mensagem que será lida
 f = open(file_name + "_text.txt", "w")
@@ -69,8 +69,8 @@ f.close()
 #img_bit_plane7[img_bit_plane7 > 0] = MAX_INTENSITY
 
 # salva as imagens
-io.imsave(file_name + "_bit_plane" + str(bit_plane) + file_name_extension, img_bit_plane)
-io.imsave(file_name + "_bit_plane7" + file_name_extension, img_bit_plane7)
+#io.imsave(file_name + "_bit_plane" + str(bit_plane) + file_name_extension, img_bit_plane)
+#io.imsave(file_name + "_bit_plane7" + file_name_extension, img_bit_plane7)
 
 # calcula tempo decorrido
 elapsed_time = time.time() - start_time
