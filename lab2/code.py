@@ -74,6 +74,19 @@ for bit in binary_message:
 
 	color = (color + 1) % 3
 
+for row in range(0, img_colored.shape[0]):
+	for col in range(0, img_colored.shape[1]):
+		bit = getBit(toBinary(pixel_rgb[color]), bit_plane)
+		img_bit_plane[row][col][color] = int(bit)
+
+		bit7 = getBit(toBinary(pixel_rgb[color]), BITS - 1)
+		img_bit_plane7[row][col][color] = int(bit7)
+
+# transformação de intensidade
+# isso é feito para podermos visualizar melhor as imagens dos planos. caso contrário, elas ficariam escuras demais
+img_bit_plane[img_bit_plane > 0] = MAX_INTENSITY
+img_bit_plane7[img_bit_plane7 > 0] = MAX_INTENSITY
+
 # salva imagem de saida
 io.imsave(file_name + "_output" + file_name_extension, img_colored)
 
