@@ -32,7 +32,7 @@ img_colored = io.imread(file_name + file_name_extension)
 f = open(file_name + "_text.txt", "w")
 bits = ""
 color = 0
-write_file = True
+stop = False
 
 """Para cada canal de cor do pixel img_colored[linha][coluna],
 	Concatena o bit da posicao bit_plane menos siginificativo na variavel bits
@@ -46,11 +46,16 @@ for row in range(0, img_colored.shape[0]):
 			bits = bits + bit
 
 			if len(bits) == BITS:
-				if write_file and toDecimal(bits) != 0:
+				if not stop and toDecimal(bits) != 0:
 					f.write(chr(toDecimal(bits)))			
 					bits = ""
 				else:
-					write_file = False
+					stop = True
+					break
+		if stop:
+			break
+	if stop:
+		break
 
 # fecha o arquivo texto
 f.write("\n")
