@@ -45,6 +45,11 @@ binary_message = ""
 for letter in message:
 	binary_message += toBinary(ord(letter))
 
+# verifica se o texto cabe na imagem
+if len(binary_message) > img_colored.size:
+	print("Message is bigger than image. Consider input a smaller text.")
+	sys.exit()
+
 """ img_colored[linha][coluna] retorna um array [R, G, B].
 	Seja P o valor de img_colored[linha][coluna][R].
 	Transformar P para binario;
