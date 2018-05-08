@@ -25,6 +25,14 @@ def calculate_profile(img):
 
 	return profile
 
+def calculate_value(profile):
+	value = 0
+
+	for row in range(0, profile.shape[0]-1):
+		value += (profile[row] - profile[row+1]) ** 2
+
+	return value
+
 def horizontal_projection(img, img_input_name):
 	print("horizontal")
 	
@@ -39,14 +47,11 @@ def horizontal_projection(img, img_input_name):
 	# TODO: mudar. está com limiariazação global
 	img_gray[img_gray < 200] = 0
 
-	# calcula perfil da imagem original
-	profile_gray = calculate_profile(img_gray)
-
 	"""
 	value[angle] = soma dos quadrados das diferenças dos valores em células adjacentes do perfil de projeção
 	"""
 	value = {}
-	for angle in range(0, 361):
+	for angle in range(1, 181):
 		value[angle] = 0 
 
 	for angle in value.keys():
@@ -56,11 +61,10 @@ def horizontal_projection(img, img_input_name):
 		# calcula perfil da imagem rotacionada
 		profile_rotated = calculate_profile(img_rotated)
 	
-		for row in range(0, profile_rotated.shape[0]-1):
-			value[angle] += (profile_rotated[row] - profile_rotated[row+1]) ** 2
+		value[angle] = calculate_value(profile_rotated)
 	
 	# encontra o ângulo que possui o maior value
-	max_value = value[0]
+	max_value = value[1]
 	max_angle = 0	
 	for angle in value.keys():
 		if value[angle] > max_value:
@@ -68,8 +72,10 @@ def horizontal_projection(img, img_input_name):
 			max_angle = angle
 
 	print("Ângulo %d" % (max_angle))
+	if max_angle > 90:
+		max_angle -= 180
 
 	# salva imagem rotacionada
-	img_perfect = transform.rotate(img_gray, max_angle)
+	img_perfect = transform.rotate(img, max_angle)
 	img_perfect = exposure.rescale_intensity(img_perfect, out_range=(0, 1))
-	io.imsave(img_input_name + "_horizontal_output.png", img_perfect)	
+	io.imsave(img_input_name.replace(".png", "") + "_horizontal_output.png", img_perfect)	
