@@ -32,7 +32,7 @@ def calculate_value(profile):
 
 	return value
 
-def horizontal_projection(img, img_input_name):
+def horizontal_projection(img, img_output_name):
 	# transformação para escala de cinza
 	img_gray = color.rgb2gray(img)
 
@@ -56,8 +56,8 @@ def horizontal_projection(img, img_input_name):
 	# imprime angulo na saida padrao
 	if max_angle > 90:
 		max_angle -= 180
-	print("Angle %d degrees" % (max_angle))	
+	print("Angle = %d degrees" % (max_angle))	
 
 	# salva imagem rotacionada
-	img_perfect = transform.rotate(img, max_angle)
-	io.imsave(img_input_name.replace(".png", "") + "_horizontal_output.png", img_perfect)	
+	img_rotated = transform.rotate(img, max_angle)
+	io.imsave(img_output_name, img_rotated)	
