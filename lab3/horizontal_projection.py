@@ -53,10 +53,10 @@ def horizontal_projection(img, img_input_name):
 	# encontra o angulo que possui o maior value
 	max_angle = max(value, key=value.get)
 
-	# imprime angulo na saida padrao 
-	print("Angle %d degrees" % (max_angle))
+	# imprime angulo na saida padrao
 	if max_angle > 90:
 		max_angle -= 180
+	print("Angle %d degrees" % (max_angle))	
 
 	# salva imagem rotacionada
 	img_perfect = transform.rotate(img, max_angle)
