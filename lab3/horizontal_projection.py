@@ -10,14 +10,11 @@ Input: imagem RGBA.
 """
 profile[i] = quantidade de pixels pretos da linha i
 """
-# TODO: está com limiarização global
 def calculate_profile(img):
 	profile = np.zeros((img.shape[0]), dtype=int)
 	
 	for row in range(0, img.shape[0]):
-		for col in range(0, img.shape[1]):
-			if img[row][col] < 0.8:
-				profile[row] += 1
+		profile[row] = np.sum(img[row])
 
 	return profile
 
@@ -36,8 +33,9 @@ def horizontal_projection(img, img_output_name):
 	# transformação para escala de cinza
 	img_gray = color.rgb2gray(img)
 
-	# TODO: mudar. está com limiariazação global
+	# binarizacao da imagem dado um limiar local
 	img_gray[img_gray < 0.8] = 0.0
+	img_gray[img_gray >= 0.8] = 1.0
 
 	# cria dicionario com key angulo e value valor da função objetivo 
 	value = {}
