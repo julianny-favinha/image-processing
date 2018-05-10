@@ -33,7 +33,7 @@ def horizontal_projection(img, img_output_name):
 	# transformação para escala de cinza
 	img_gray = color.rgb2gray(img)
 
-	# binarizacao da imagem dado um limiar local
+	# binarizacao da imagem dado um limiar global
 	img_gray[img_gray < 0.8] = 0.0
 	img_gray[img_gray >= 0.8] = 1.0
 
