@@ -10,8 +10,6 @@ Input: imagem RGBA.
 """
 
 def hough_transform(img, img_output_name):
-	print("hough")
-
 	# transformação para escala de cinza
 	img_gray = color.rgb2gray(img)
 	img_gray = exposure.rescale_intensity(img_gray, out_range=(0, 255))
@@ -37,9 +35,9 @@ def hough_transform(img, img_output_name):
 				angles[angle] = 1
 
 	# encontra o angulo que possui o maior frequencia
-	max_angle = max(angles, key=angles.get)
-	print("Angle = %d degrees" % (np.rad2deg(max_angle)))
+	max_angle = np.rad2deg(max(angles, key=angles.get))
+	print("Angle = %d degrees" % (max_angle))
 
 	# salva imagem rotacionada
-	img_rotated = transform.rotate(img, np.rad2deg(max_angle), mode='edge')
-	io.imsave(img_output_name, img_rotated)	
+	img_rotated = transform.rotate(img, max_angle, mode='edge')
+	io.imsave(img_output_name, img_rotated)
