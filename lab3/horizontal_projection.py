@@ -57,5 +57,5 @@ def horizontal_projection(img, img_output_name):
 	print("Angle = %d degrees" % (max_angle))	
 
 	# salva imagem rotacionada
-	img_rotated = transform.rotate(img, max_angle)
+	img_rotated = transform.rotate(img, max_angle, mode='edge')
 	io.imsave(img_output_name, img_rotated)	
