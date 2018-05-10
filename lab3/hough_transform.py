@@ -23,35 +23,23 @@ def hough_transform(img, img_output_name):
 	# deteccao de bordas
 	edges = feature.canny(img_gray)
 
-	""" ALGORITMO DO PROFESSOR"""
-	"""for row in range(0, img_gray.shape[0]):
-		for col in range(0, img_gray.shape[1]):
-			if img_gray[row][col] == 255:
-				acumulador = hough(row, col)"""
-				
-
-	angles = {}
 	# deteccao de linhas
 	lines = transform.probabilistic_hough_line(edges, threshold=10, line_length=25, line_gap=3)
-	#print(lines)
 
+	# determina frequencia de cada angulo
+	angles = {}
 	for ((x1, y1), (x2, y2)) in lines:
-		angle = (y2 - y1) / (x2 - x1)
-		if angle in angles.keys():
-			angles[angle] += 1
-		else:
-			angles[angle] = 1
+		if x2 - x1 != 0:
+			angle = (y2 - y1) / (x2 - x1)
+			if angle in angles.keys():
+				angles[angle] += 1
+			else:
+				angles[angle] = 1
 
-	""" para cada linha em lines, detectar o angulo? arredondar para int.
-		fazer tipo um dicionario de {angulo:frequencia} ???"""
-
-	print(angles)
-
-	# encontra o angulo que possui o maior value
+	# encontra o angulo que possui o maior frequencia
 	max_angle = max(angles, key=angles.get)
-	print(max_angle)
 	print("Angle = %d degrees" % (np.rad2deg(max_angle)))
 
 	# salva imagem rotacionada
-	img_rotated = transform.rotate(img, np.rad2deg(max_angle))
+	img_rotated = transform.rotate(img, np.rad2deg(max_angle), mode='edge')
 	io.imsave(img_output_name, img_rotated)	
