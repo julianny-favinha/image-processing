@@ -11,12 +11,7 @@ Input: imagem RGBA.
 profile[i] = quantidade de pixels pretos da linha i
 """
 def calculate_profile(img):
-	profile = np.zeros((img.shape[0]), dtype=int)
-	
-	for row in range(0, img.shape[0]):
-		profile[row] = np.sum(img[row])
-
-	return profile
+	return np.sum(img, axis=1)
 
 """
 value = soma dos quadrados das diferenças dos valores em células adjacentes do perfil de projeção
@@ -46,6 +41,7 @@ def horizontal_projection(img, img_output_name):
 	for angle in value.keys():
 		img_rotated = transform.rotate(img_gray, angle)
 		profile_rotated = calculate_profile(img_rotated)
+		#print(profile_rotated)
 		value[angle] = calculate_value(profile_rotated)
 	
 	# encontra o angulo que possui o maior value
