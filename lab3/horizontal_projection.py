@@ -17,12 +17,7 @@ def calculate_profile(img):
 value = soma dos quadrados das diferenças dos valores em células adjacentes do perfil de projeção
 """
 def calculate_value(profile):
-	value = 0
-
-	for row in range(0, profile.shape[0]-1):
-		value += (profile[row] - profile[row+1]) ** 2
-
-	return value
+	return np.sum(np.square(np.diff(profile)))
 
 def horizontal_projection(img, img_output_name):
 	# transformação para escala de cinza
@@ -32,7 +27,7 @@ def horizontal_projection(img, img_output_name):
 	img_gray[img_gray < 0.8] = 0.0
 	img_gray[img_gray >= 0.8] = 1.0
 
-	# cria dicionario com key angulo e value valor da função objetivo 
+	# cria dicionario com key angulo e value valor da funcao objetivo 
 	value = {}
 	for angle in range(1, 181):
 		value[angle] = 0 
@@ -41,7 +36,6 @@ def horizontal_projection(img, img_output_name):
 	for angle in value.keys():
 		img_rotated = transform.rotate(img_gray, angle)
 		profile_rotated = calculate_profile(img_rotated)
-		#print(profile_rotated)
 		value[angle] = calculate_value(profile_rotated)
 	
 	# encontra o angulo que possui o maior value
