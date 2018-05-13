@@ -19,6 +19,17 @@ value = soma dos quadrados das diferenças dos valores em células adjacentes do
 def calculate_value(profile):
 	return np.sum(np.square(np.diff(profile)))
 
+"""
+max_ angle = angulo de maior frequencia em value
+"""
+def objective(value):
+	max_angle = max(value, key=value.get)
+
+	if max_angle > 90:
+		max_angle -= 180
+
+	return max_angle
+
 def horizontal_projection(img, img_output_name):
 	# transformação para escala de cinza
 	img_gray = color.rgb2gray(img)
@@ -38,14 +49,10 @@ def horizontal_projection(img, img_output_name):
 		profile_rotated = calculate_profile(img_rotated)
 		value[angle] = calculate_value(profile_rotated)
 	
-	# encontra o angulo que possui o maior value
-	max_angle = max(value, key=value.get)
-
-	# imprime angulo na saida padrao
-	if max_angle > 90:
-		max_angle -= 180
+	# calcula angulo com maior frequencia
+	max_angle = objective(value)
 	print("Angle = %d degrees" % (max_angle))	
 
 	# salva imagem rotacionada
 	img_rotated = transform.rotate(img, max_angle, mode='edge')
-	io.imsave(img_output_name, img_rotated)	
+	io.imsave(img_output_name, img_rotated)
