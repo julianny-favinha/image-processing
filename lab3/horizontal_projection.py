@@ -40,7 +40,7 @@ def horizontal_projection(img, img_output_name):
 
 	# cria dicionario com key angulo e value valor da funcao objetivo 
 	value = {}
-	for angle in range(1, 181):
+	for angle in range(0, 181):
 		value[angle] = 0 
 
 	# calcula profile e value para a imagem rotacionada em angle
@@ -54,5 +54,5 @@ def horizontal_projection(img, img_output_name):
 	print("Angle = %d degrees" % (max_angle))	
 
 	# salva imagem rotacionada
-	img_rotated = transform.rotate(img, max_angle, mode='edge')
+	img_rotated = transform.rotate(img, max_angle, mode='edge', resize=True)
 	io.imsave(img_output_name, img_rotated)

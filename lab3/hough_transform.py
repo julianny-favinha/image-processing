@@ -50,5 +50,5 @@ def hough_transform(img, img_output_name):
 	print("Angle = %d degrees" % (max_angle))
 
 	# salva imagem rotacionada
-	img_rotated = transform.rotate(img, max_angle, mode='edge')
+	img_rotated = transform.rotate(img, max_angle, mode='edge', resize=True)
 	io.imsave(img_output_name, img_rotated)
