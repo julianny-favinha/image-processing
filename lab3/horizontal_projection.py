@@ -8,7 +8,7 @@ Input: imagem RGBA.
 """
 
 """
-profile[i] = quantidade de pixels pretos da linha i
+profile = quantidade de pixels pretos para cada linha
 """
 def calculate_profile(img):
 	return np.sum(img, axis=1)
