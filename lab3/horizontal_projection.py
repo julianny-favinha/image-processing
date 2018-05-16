@@ -45,7 +45,7 @@ def horizontal_projection(img, img_output_name):
 
 	# calcula profile e value para a imagem rotacionada em angle
 	for angle in value.keys():
-		img_rotated = transform.rotate(img_gray, angle)
+		img_rotated = transform.rotate(img_gray, angle, resize=True)
 		profile_rotated = calculate_profile(img_rotated)
 		value[angle] = calculate_value(profile_rotated)
 	
