@@ -1,4 +1,4 @@
-from skimage import io, transform, exposure, color
+from skimage import color, exposure, io, transform, util
 import numpy as np
 
 """ 
@@ -37,6 +37,7 @@ def horizontal_projection(img, img_output_name):
 	# binarizacao da imagem dado um limiar global
 	img_gray[img_gray < 0.8] = 0.0
 	img_gray[img_gray >= 0.8] = 1.0
+	img_gray = util.invert(img_gray)
 
 	# cria dicionario com key angulo e value valor da funcao objetivo 
 	value = {}
