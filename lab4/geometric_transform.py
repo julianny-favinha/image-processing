@@ -22,7 +22,7 @@ def read_parameters():
 
 	parser.add_argument("-a", "--angle", type=float, help="angle in degrees to rotate image")
 	parser.add_argument("-e", "--scale", type=float, help="scale to shrink or extend image")
-	parser.add_argument("-d", "--dimensions", nargs="+", type=int, help="width and height of new image")
+	parser.add_argument("-d", "--dimensions", nargs=2, type=int, help="width and height of new image")
 	parser.add_argument("-m", "--mode", type=str, help="Interpolation {neighbor, bilinear, bicubic, lagrange}")
 	parser.add_argument("-i", "--inputname", type=str, help="Image input name")
 	parser.add_argument("-o", "--outputname", type=str, help="Image output name")
