@@ -18,15 +18,10 @@ def bilinear(dic):
 			col_floor = floor(col/dic["scale"])
 			col_ceil = ceil(col/dic["scale"]) if ceil(col/dic["scale"]) < img.shape[1] else img.shape[1]-1
 
-			p1 = (row_floor, col_floor)
-			p2 = (row_floor, col_ceil)
-			p3 = (row_ceil, col_floor)
-			p4 = (row_ceil, col_ceil)
-
-			img1 = img[p1[0]][p1[1]]
-			img2 = img[p2[0]][p2[1]]
-			img3 = img[p3[0]][p3[1]]
-			img4 = img[p4[0]][p4[1]]
+			img1 = img[row_floor][col_floor]
+			img2 = img[row_floor][col_ceil]
+			img3 = img[row_ceil][col_floor]
+			img4 = img[row_ceil][col_ceil]
 
 			dx = abs(row/dic["scale"] - round(row/dic["scale"]))
 			dy = abs(col/dic["scale"] - round(col/dic["scale"]))
