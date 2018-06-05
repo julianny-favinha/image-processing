@@ -5,10 +5,7 @@ def R(s):
 	return (1/6)*(pow(P(s+2), 3) - 4*pow(P(s+1), 3) + 6*pow(P(s), 3) - 4*pow(P(s-1), 3))
 
 def P(s):
-	if s > 0:
-		return s
-
-	return 0
+	return s if s > 0 else 0
 
 def bicubic(dic):
 	print("bicubic")
