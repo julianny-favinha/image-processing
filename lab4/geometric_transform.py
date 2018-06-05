@@ -1,42 +1,15 @@
-import sys, getopt
+import argparse
 
-
-
-def read_parameters(argv):
-	# -a
-	angle = 0.0
-
-	# -e
-	scale = 0.0
-
-	# -d
-	width, height = (0, 0)
-
-	# -m
-	mode = ""
-
-	# -i
-	img_input_name = ""
-
-	# -o
-	img_output_name = ""
-   
-	opts, args = getopt.getopt(argv, "a:e:d:m:i:o")
-
-	for opt, arg in opts:
-		if opt == "-a":
-			angle = arg
-		if opt == "-e":
-			scale = arg
-		# TODO parse errado
-		if opt == "-d":
-			width, length = arg
-		if opt == "-m":
-			mode = arg
-		if opt == "-i":
-			img_input_name = arg
-		if opt == "-o":
-			img_output_name = arg
+def read_parameters():
+	parser = argparse.ArgumentParser()
+	parser.add_argument("-a", "--angle", type=float, help="angle in degrees to rotate image")
+	parser.add_argument("-e", "--scale", type=float, help="scale to shrink or extend image")
+	parser.add_argument("-d", "--dimensions", nargs="+", type=int, help="width and height of new image")
+	parser.add_argument("-m", "--mode", type=str, help="{neighbor, bilinear, bicubic, lagrange}")
+	parser.add_argument("-i", "--inputname", type=str, help="Image input name")
+	parser.add_argument("-o", "--outputname", type=str, help="Image output name")
+	args = parser.parse_args()
+	print (args)
 
 if __name__ == "__main__":
-	read_parameters(sys.argv[1:])
+	read_parameters()
