@@ -1,0 +1,2 @@
+def bicubic():
+	print("bicubic")

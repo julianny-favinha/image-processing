@@ -1,0 +1,2 @@
+def neighbor():
+	print("neighbor")

@@ -1,0 +1,2 @@
+def bilinear():
+	print("bilinear")

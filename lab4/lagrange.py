@@ -1,0 +1,2 @@
+def lagrange():
+	print("lagrange")
