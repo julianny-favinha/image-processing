@@ -1,5 +1,5 @@
 import numpy as np
-from skimage import io, exposure
+from skimage import io
 
 def neighbor(dic):
 	print("neighbor")
