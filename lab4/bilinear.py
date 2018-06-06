@@ -2,16 +2,22 @@ import numpy as np
 from math import ceil, floor
 from skimage import io
 
+def boundary(img, row, col):
+	if row >= img.shape[0] or row < 0 or col >= img.shape[1] or col < 0:
+		return 0
+
+	return img[row][col]
+
 def bilinear(img, row, col):
 	row_floor = floor(row)
-	row_ceil = ceil(row) if ceil(row) < img.shape[0] else img.shape[0]-1
+	row_ceil = ceil(row)
 	col_floor = floor(col)
-	col_ceil = ceil(col) if ceil(col) < img.shape[1] else img.shape[1]-1
+	col_ceil = ceil(col)
 
-	p1 = img[row_floor][col_floor]
-	p2 = img[row_floor][col_ceil]
-	p3 = img[row_ceil][col_floor]
-	p4 = img[row_ceil][col_ceil]
+	p1 = boundary(img, row_floor, col_floor)
+	p2 = boundary(img, row_floor, col_ceil)
+	p3 = boundary(img, row_ceil, col_floor)
+	p4 = boundary(img, row_ceil, col_ceil)
 
 	dx = abs(row - row_floor)
 	dy = abs(col - col_floor)
