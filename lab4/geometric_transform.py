@@ -1,21 +1,11 @@
 import argparse
+import numpy as np
+from skimage import io
 
 from neighbor import neighbor
 from bilinear import bilinear
 from bicubic import bicubic
 from lagrange import lagrange
-
-def create_dict(angle, scale, dimensions, mode, inputname, outputname):
-	dic = {}
-
-	dic["angle"] = angle
-	dic["scale"] = scale
-	dic["dimensions"] = dimensions
-	dic["mode"] = mode
-	dic["inputname"] = inputname
-	dic["outputname"] = outputname
-
-	return dic
 
 def read_parameters():
 	parser = argparse.ArgumentParser()
@@ -28,18 +18,49 @@ def read_parameters():
 	parser.add_argument("-o", "--outputname", type=str, help="Image output name")
 
 	args = parser.parse_args()
-
-	return create_dict(args.angle, args.scale, args.dimensions, args.mode, args.inputname, args.outputname)
+	return args
 
 if __name__ == "__main__":
 	# parse dos parametros
-	dic = read_parameters()
+	args = read_parameters()
 
-	if dic["mode"] == "neighbor":
-		neighbor(dic)
-	elif dic["mode"] == "bilinear":
-		bilinear(dic)
-	elif dic["mode"] == "bicubic":
-		bicubic(dic)
+	angle = args.angle
+	scale = args.scale
+	dimensions = args.dimensions
+	mode = args.mode
+	inputname = args.inputname
+	outputname = args.outputname
+
+	# le a imagem de entrada
+	img = io.imread(inputname)
+	dimensions = (img.shape[0], img.shape[1])
+
+	# calcula as dimensoes da nova imagem
+	if scale is not None:
+		dimensions = (int(img.shape[0]*scale), int(img.shape[1]*scale))	
+
+	if angle is not None:
+		matrix = np.array([[np.cos(np.deg2rad(angle)), -np.sin(np.deg2rad(angle))], [np.sin(np.deg2rad(angle)), np.cos(np.deg2rad(angle))]])
 	else:
-		lagrange(dic)
+		matrix = np.array([[dimensions[1] / img.shape[1], 0.0], [0.0, dimensions[0] / img.shape[0]]])
+
+	inverse = np.linalg.inv(matrix)
+
+	# nova imagem
+	new_img = np.zeros(shape=(dimensions[1], dimensions[0]), dtype=np.uint8)
+ 
+	for row in range(0, new_img.shape[0]):
+		for col in range(0, new_img.shape[1]):
+			coord = np.array([[row], [col]])
+			new_coord = inverse @ coord
+
+			if mode == "neighbor":
+				new_img[row][col] = neighbor(img, new_coord.ravel()[0], new_coord.ravel()[1])
+			elif mode == "bilinear":
+				new_img[row][col] = bilinear(img, new_coord.ravel()[0], new_coord.ravel()[1])
+			"""elif mode == "bicubic":
+				new_img[row][col] = bicubic(img, new_coord.ravel()[0], new_coord.ravel()[1])
+			else:
+				new_img[row][col] = lagrange(img, new_coord.ravel()[0], new_coord.ravel()[1])"""
+
+	io.imsave(outputname, new_img)

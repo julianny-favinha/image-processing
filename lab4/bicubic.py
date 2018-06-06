@@ -7,31 +7,32 @@ def R(s):
 def P(s):
 	return s if s > 0 else 0
 
-def bicubic(dic):
+def bicubic(img, dic):
 	print("bicubic")
 
-	# le a imagem de entrada
-	img = io.imread(dic["inputname"])
+	# scale in x and in y
+	scale_x = dic["dimensions"][1] / img.shape[1]
+	scale_y = dic["dimensions"][0] / img.shape[0]
 
 	# dimensoes da nova imagem
-	new_img = np.zeros(shape=(int(img.shape[0]*dic["scale"]), int(img.shape[1]*dic["scale"])), dtype=np.uint8)
+	new_img = np.zeros(shape=(dic["dimensions"][1], dic["dimensions"][0]), dtype=np.uint8)
 
-	for row in range(0, new_img.shape[0]-1):
-		for col in range(0, new_img.shape[1]-1):
-			dx = abs(row/dic["scale"] - round(row/dic["scale"]))
-			dy = abs(col/dic["scale"] - round(col/dic["scale"]))
+	for row in range(0, new_img.shape[0]):
+		for col in range(0, new_img.shape[1]):
+			dx = abs(row/scale_x - round(row/scale_x))
+			dy = abs(col/scale_y - round(col/scale_y))
 
 			value = 0.0
 
 			for m in range(-1, 3):
 				for n in range(-1, 3):
-					img_row = round(row/dic["scale"]) + m 
+					img_row = round(row/scale_x) + m 
 					if img_row >= img.shape[0]:
 						img_row = img.shape[0]-1
 					elif img_row < 0:
 						img_row = 0
 
-					img_col = round(col/dic["scale"]) + n
+					img_col = round(col/scale_y) + n
 					if img_col >= img.shape[1]:
 						img_col = img.shape[1]-1
 					elif img_col < 0:

@@ -1,17 +1,13 @@
 import numpy as np
 from skimage import io
 
-def neighbor(dic):
-	print("neighbor")
+def neighbor(img, row, col):
+	row = int(round(row))
+	if row >= img.shape[0] or row < 0:
+		return 255
 
-	# le a imagem de entrada
-	img = io.imread(dic["inputname"])
+	col = int(round(col))
+	if col >= img.shape[1] or col < 0:
+		return 255
 
-	# dimensoes da nova imagem
-	new_img = np.zeros(shape=(int(img.shape[0]*dic["scale"]), int(img.shape[1]*dic["scale"])), dtype=np.uint8)
-
-	for row in range(0, new_img.shape[0]-1):
-		for col in range(0, new_img.shape[1]-1):
-			new_img[row][col] = img[round(row/dic["scale"])][round(col/dic["scale"])]
-
-	io.imsave(dic["outputname"], new_img)
+	return img[row][col]
