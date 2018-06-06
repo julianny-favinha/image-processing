@@ -1,12 +1,7 @@
 import numpy as np
 from math import floor
 from skimage import io
-
-def boundary(img, row, col):
-	if row >= img.shape[0] or row < 0 or col >= img.shape[1] or col < 0:
-		return 0
-
-	return img[row][col]
+from utilities import boundary, distances
 
 def L(img, n, dx, row, col):
 	p1 = (-dx*(dx-1)*(dx-2)*boundary(img, row-1, col+n-2))/6
@@ -30,7 +25,6 @@ def new_intensity(img, dx, dy, row, col):
 	return f1 + f2 + f3 + f4
 
 def lagrange(img, row, col):
-	dx = row - floor(row)
-	dy = col - floor(col)
+	dx, dy = distances(row, col)
 
 	return new_intensity(img, dx, dy, floor(row), floor(col))
