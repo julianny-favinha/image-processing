@@ -58,9 +58,9 @@ if __name__ == "__main__":
 				new_img[row][col] = neighbor(img, new_coord.ravel()[0], new_coord.ravel()[1])
 			elif mode == "bilinear":
 				new_img[row][col] = bilinear(img, new_coord.ravel()[0], new_coord.ravel()[1])
-			"""elif mode == "bicubic":
+			elif mode == "bicubic":
 				new_img[row][col] = bicubic(img, new_coord.ravel()[0], new_coord.ravel()[1])
-			else:
+			"""else:
 				new_img[row][col] = lagrange(img, new_coord.ravel()[0], new_coord.ravel()[1])"""
 
 	io.imsave(outputname, new_img)
