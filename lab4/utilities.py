@@ -1,3 +1,5 @@
+from math import floor
+
 def distances(row, col):
 	return row - floor(row), col - floor(col)
 

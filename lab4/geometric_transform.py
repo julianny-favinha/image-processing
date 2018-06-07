@@ -33,11 +33,12 @@ if __name__ == "__main__":
 
 	# le a imagem de entrada
 	img = io.imread(inputname)
-	dimensions = (img.shape[0], img.shape[1])
+	if dimensions is None:
+		dimensions = (img.shape[0], img.shape[1])
 
 	# calcula as dimensoes da nova imagem
 	if scale is not None:
-		dimensions = (int(img.shape[0]*scale), int(img.shape[1]*scale))	
+		dimensions = (int(img.shape[0]*scale), int(img.shape[1]*scale))
 
 	if angle is not None:
 		matrix = np.array([[np.cos(np.deg2rad(angle)), -np.sin(np.deg2rad(angle))], [np.sin(np.deg2rad(angle)), np.cos(np.deg2rad(angle))]])
