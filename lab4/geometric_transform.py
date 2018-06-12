@@ -22,7 +22,7 @@ def read_parameters():
 	return args
 
 if __name__ == "__main__":
-    start_time = time.time()
+	start_time = time.time()
     
 	# parse dos parametros
 	args = read_parameters()
@@ -67,7 +67,7 @@ if __name__ == "__main__":
 			else:
 				new_img[row][col] = lagrange(img, new_coord.ravel()[0], new_coord.ravel()[1])
 
-    io.imsave(outputname, new_img)
+	io.imsave(outputname, new_img)
 
-    elapsed_time = time.time() - start_time
-    print("Elapsed time: %1f s" %(elapsed_time))
+	elapsed_time = time.time() - start_time
+	print("Elapsed time: %1f s" %(elapsed_time))
